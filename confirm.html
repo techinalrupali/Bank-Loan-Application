@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Bank Loan Application</title>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
+    <style>
+      html, body {
+      min-height: 100%;
+      }
+      body, div, form, input, p { 
+      padding: 0;
+      margin: 0;
+      outline: none;
+      font-family: Roboto, Arial, sans-serif;
+      font-size: 16px;
+      color: #eee;
+      }
+   
+      .bankcard{
+        height: 100vh;
+        background-color:rgb(85, 177, 141);
+      }
+      h2 {
+      text-transform: uppercase;
+      font-weight: 400;
+      }
+      h2 {
+      margin: 0 0 0 8px;
+      }
+      span{
+        color:coral;
+      }
+      .main-block {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100%;
+      padding: 25px;
+      background: rgba(0, 0, 0, 0.5); 
+      }
+      .left-part, form {
+      padding: 25px;
+      }
+      .left-part {
+      text-align: center;
+      }
+     
+      form {
+      background: rgba(0, 0, 0, 0.7); 
+      }
+      
+      .info {
+      display: flex;
+      flex-direction: column;
+      }
+      input, select {
+      padding: 5px;
+      margin-bottom: 30px;
+      background: transparent;
+      border: none;
+      border-bottom: 1px solid #eee;
+      }
+      input::placeholder {
+      color: #eee;
+      }
+      
+      button {
+      padding: 10px 5px;
+      margin-top: 20px;
+      border-radius: 5px; 
+      border: none;
+      background: rgb(65, 155, 120); 
+      text-decoration: none;
+      font-size: 20px;
+      font-weight: 400;
+      color: black;
+      }
+      .btn-item {
+      display: inline-block;
+      margin: 20px 5px 0;
+      }
+      button {
+      width: 30%;
+      }
+      button:hover, .btn-item:hover {
+      background: #85d6de;
+      }
+  
+      @media (min-width: 568px) {
+      html, body {
+      height: 100%;
+      }
+      .main-block {
+      flex-direction: row;
+      height: calc(100% - 50px);
+      }
+      .left-part, form {
+      flex: 1;
+      height: auto;
+      }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container bankcard">
+        <div class="main-block">
+            <div class="left-part">
+              <img src="Images/Bank.png" alt="">
+              <h2 class="vname">Dear <span id="name"></span></h3>
+                <p>Thank you for your inquiry. A 4 digit verification number has been sent to your email : <span
+                        id="emailadd"></span> and Phone Number : <span id="pnumberadd"></span>, please enter it in the
+                    following box and submit for confirmation. </p>
+            </div>
+            
+            <form action="ThankYou.html" id="varifiedform">
+                <input type="number" name="Otp" id="otp" class="otp">
+                <button type="submit" id="sub">SubmitOtp</button>
+                <span id="warning"></span>
+
+            </form>
+      
+          </div>
+       </div>
+    
+       <script>
+        // event.preventDefault();
+
+        var attempt = 3;
+        var fullname = localStorage.getItem('fname')
+        var email = localStorage.getItem('email')
+        var phonenum=localStorage.getItem('pnumber')
+        var mainOtp=localStorage.getItem('mainOtp')
+        document.querySelector('#name').innerHTML = fullname
+        document.querySelector('#emailadd').innerHTML = email
+        document.querySelector('#pnumberadd').innerHTML = phonenum
+
+
+        var vform = document.querySelector('#varifiedform')
+
+        attempt=3
+        vform.addEventListener('submit', function (e)
+         {
+             // var motp =parseInt(localStorage.getItem('mainOtp'))
+             var otp=document.querySelector('#otp').value
+            
+            if(otp==='')
+            {
+                alert('required')
+                e.preventDefault();
+            }
+
+           else if (mainOtp===otp) {
+                alert('verified successfully')
+            }
+            else {
+                attempt--;
+                document.querySelector('#warning').innerHTML = "You have left " + attempt + " attempt;"
+                e.preventDefault();
+                if (attempt == 0) {
+
+                    document.querySelector('#warning').innerHTML = 'You are Blocked'
+                    document.getElementById("otp").disabled = true;
+                    document.getElementById("sub").disabled = true;
+                    document.getElementById("sub").style.backgroundColor = 'red';
+                
+                    e.preventDefault();
+                }
+            }
+        }
+        )
+
+
+    </script>
+  </body>
+  </html>

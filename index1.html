@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Bank Loan Application</title>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
+    <style>
+      html, body {
+      min-height: 100%;
+      }
+      body, div, form, input, p { 
+      padding: 0;
+      margin: 0;
+      outline: none;
+      font-family: Roboto, Arial, sans-serif;
+      font-size: 16px;
+      color: #eee;
+      }
+   
+      .bankcard{
+        height: 100vh;
+        background-color:rgb(85, 177, 141);
+      }
+      h1, h2 {
+      text-transform: uppercase;
+      font-weight: 400;
+      }
+      h1{
+        color:black;
+        font-weight: bolder;
+      }
+      h2 {
+      margin: 0 0 0 8px;
+      }
+      span{
+        color: red;
+      }
+      .main-block {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100%;
+      padding: 25px;
+      background: rgba(0, 0, 0, 0.5); 
+      }
+      .left-part, form {
+      padding: 25px;
+      }
+      .left-part {
+      text-align: center;
+      }
+      
+      form {
+      background: rgba(0, 0, 0, 0.7); 
+      }
+      .title {
+      display: flex;
+      align-items: center;
+      margin-bottom: 20px;
+      }
+      .info {
+      display: flex;
+      flex-direction: column;
+      }
+      input{
+      padding: 5px;
+      margin-bottom: 30px;
+      background: transparent;
+      border: none;
+      border-bottom: 1px solid #eee;
+      }
+      input::placeholder {
+      color: #eee;
+      }
+      
+      button {
+      padding: 10px 5px;
+      margin-top: 20px;
+      border-radius: 5px; 
+      border: none;
+      background: rgb(65, 155, 120); 
+      text-decoration: none;
+      font-size: 20px;
+      font-weight: 400;
+      color: black;
+      }
+      .btn-item {
+      display: inline-block;
+      margin: 20px 5px 0;
+      }
+      button {
+      width: 30%;
+      }
+      button:hover, .btn-item:hover {
+      background: #85d6de;
+      }
+      #calculatebtn {
+        background-color: red;
+        color: #fff;
+        cursor: pointer;
+        font-weight: bold;
+        padding: 0.5rem 1rem;
+        position: relative;
+        justify-content: center;
+        align-items: center;
+        border-radius: 5px;
+        margin-left: 1rem;
+      }
+      #calculatebtn :hover {
+        filter: brightness(1.1);
+      }
+      @media (min-width: 568px) {
+      html, body {
+      height: 100%;
+      }
+      .main-block {
+      flex-direction: row;
+      height: calc(100% - 50px);
+      }
+      .left-part, form {
+      flex: 1;
+      height: auto;
+      }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container bankcard">
+        <div class="main-block">
+            <div class="left-part">
+              <!-- <i class="fas fa-graduation-cap"></i> -->
+              <img src="Images/Bank.png" alt="">
+              <h1>Bank Loan Appliction Form</h1>
+              <p> <span>*</span> Kindly enter the correct information in the Loan
+                  Application Form</p>
+            </div>
+            <form id="form1" action="confirm.html" >
+              <div class="title">
+                <i class="fas fa-pencil-alt"></i> 
+                <h2>Loan Application</h2>
+              </div>
+              <div class="info">
+                <input class="fname" type="text" name="name" id="fname" placeholder="Full Name">
+                <input type="text" name="email" id="email" placeholder="Email">
+                <input type="text" name="pnumber" id="pnumber" placeholder="Phone Number" maxlength="10">
+                <input type="text" name="pan" id="pan" placeholder="PAN Number">
+                <input type="number" name="loanamount" id="loanamount" placeholder="Loan Amount (Rs.)">
+                <input type="number" name="loanTenure" id="loanTenure" placeholder="Loan Tenure">
+                <button id="calculatebtn">Calculate EMI</button><br>
+                <label for="emi">Estimated EMI: 
+                    <span style="font-weight: 20px; color: rgb(119, 119, 204);" id="output"></span>
+                </label>
+            </div>
+              <button type="submit" href="">Submit</button>
+              <button type="submit" href="">Reset</button>
+            </form>
+          </div>
+       </div>
+
+
+       
+    <script>
+      
+        // calculate EMI
+        var result = document.querySelector('#calculatebtn');
+        result.addEventListener('click', function(e){
+        
+        e.preventDefault();
+        var loanamount=document.querySelector('#loanamount').value
+          var loanTenure=document.querySelector('#loanTenure').value
+          var emi=Math.round([loanamount*0.007*Math.pow((1+0.007),(loanTenure*12))]/[Math.pow((1+0.007),(loanTenure*12))-1])
+          document.getElementById('output').innerHTML='Rs '+ emi+'/- Per Month'
+      })
+  
+  
+  
+      //Validation 
+      var formvalidate=document.querySelector('#form1')
+       
+       formvalidate.addEventListener('submit', function(e) {
+           
+           
+           var fullname=document.querySelector('#fname').value
+           var email=document.querySelector('#email').value
+           var phonenum=document.querySelector('#pnumber').value
+           var pan=document.querySelector('#pan').value
+           var Loanamount=document.querySelector('#loanamount').value
+           var LoanTenure=document.querySelector('#loanTenure').value
+           mainOtp=Math.round(Math.random()*10000+1234)
+           
+       
+           var emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+           var regpan = /^[A-Z]{5}[0-9]{4}[A-Z]{1}/;
+   
+   
+           if(fullname==='' ||phonenum==='' ||email==='' || pan==='' ||Loanamount==='' ||LoanTenure==='')
+           {
+               alert('All Fields are Mandatory')
+               e.preventDefault();
+               
+               
+           }
+           else if(email.match(emailRegex))
+            {
+                if(pan.match(regpan))
+                {
+                   
+                    alert('Your Otp is: '+ mainOtp)
+   
+                }
+                else{
+                    alert("Pan is wrong")
+                    e.preventDefault();
+                    
+                   }
+               }
+               else
+               {
+                   alert('Email Id is Wrong')
+                   e.preventDefault();
+           }
+           
+           
+           localStorage.setItem('fname', fullname)
+           localStorage.setItem('email', email)
+           localStorage.setItem('mainOtp', mainOtp)
+           localStorage.setItem('pnumber',phonenum)
+       })
+   
+      </script>
+  </body>
+</html>
